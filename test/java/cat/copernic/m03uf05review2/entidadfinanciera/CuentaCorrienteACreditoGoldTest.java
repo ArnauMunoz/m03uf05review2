@@ -21,6 +21,8 @@ public class CuentaCorrienteACreditoGoldTest {
     public CuentaCorrienteACreditoGoldTest() {
     }
 
+    private CuentaCorrienteImpl cuenta;
+
     @BeforeClass
     public static void setUpClass() {
         System.out.println("Test starts.");
@@ -33,10 +35,12 @@ public class CuentaCorrienteACreditoGoldTest {
 
     @Before
     public void setUp() {
+        cuenta = new CuentaCorrienteACreditoGold(5000.00, "Sara");
     }
 
     @After
     public void tearDown() {
+        cuenta = null;
     }
 
     /**
@@ -46,12 +50,57 @@ public class CuentaCorrienteACreditoGoldTest {
     public void testAbona() {
         System.out.println("abona");
 
-        CuentaCorrienteImpl cuenta = new CuentaCorrienteACreditoGold(5000, "Sara");
-        cuenta.abona(8000);
-        assertEquals(-3000, cuenta.getSaldo(), 2);
+        cuenta.abona(8000.00);
+        assertEquals(-3000.00, cuenta.getSaldo(), 2);
 
     }
-    
-   
+
+    @Test
+    public void testAbonaError1() {
+        System.out.println("abona error1");
+
+        cuenta.abona(-1000.00);
+        assertNotEquals(0.00, cuenta.getSaldo(), 2);
+
+    }
+
+    @Test
+    public void testAbonaError2() {
+        System.out.println("abona error3");
+
+        cuenta.abona(0.00);
+        assertNotEquals(0.00, cuenta.getSaldo(), 2);
+
+    }
+
+    /**
+     * Test of ingresa method, of class CuentaCorrienteACreditoGold.
+     */
+    @Test
+    public void testIngresa() {
+        System.out.println("ingresa");
+
+        cuenta.ingresa(2000.00);
+        assertEquals(7000.00, cuenta.getSaldo(), 2);
+
+    }
+
+    @Test
+    public void testIngresaError1() {
+        System.out.println("ingresa error1");
+
+        cuenta.ingresa(-2000.00);
+        assertNotEquals(3000.00, cuenta.getSaldo(), 2);
+
+    }
+
+    @Test
+    public void testIngresaError2() {
+        System.out.println("ingresa error2");
+
+        cuenta.ingresa(0.00);
+        assertNotEquals(0.00, cuenta.getSaldo(), 2);
+
+    }
 
 }
